@@ -11,6 +11,11 @@
     input {
       margin: 10px;
     }
+
+    #movies-view {
+      float: right;
+    }
+    
   </style>
 </head>
 
@@ -115,8 +120,11 @@
         var an = $("#movie-input").val().trim();
 
         // Adding the movie from the textbox to our array
-        an.push(an);
-        console.log(an);
+        animals.push(an);
+
+        //don't let the user submit the same button
+        animals = $.unique(animals);
+        console.log(animals);
 
         // Calling renderButtons which handles the processing of our movie array
         renderButtons();
@@ -128,6 +136,23 @@
 
       // Calling the renderButtons function to display the initial buttons
       renderButtons();
+
+//DO NOT HAVE THIS WORKING TO PAUSE AND RESUME GIFS
+    $(".gif").on("click", function() {
+      // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+      var state = $(this).attr("data-state");
+      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+      // Then, set the image's data-state to animate
+      // Else set src to the data-still value
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+    });
+
 
       
     </script>
