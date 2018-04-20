@@ -4,46 +4,70 @@
 <head>
   <meta charset="utf-8">
   <title>GifTastic</title>
-  <style type="text/css">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Added link in case I add media queries-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Added link to the bootstrap library-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+
+    
+
+
+    <!-- Added link to the jQuery Library -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Added link to the ajax library to play around in this code as we learn in class-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <style type="text/css">
     button,
     div,
     form,
     input {
       margin: 10px;
-    }
-
-    #movies-view {
-      float: right;
+      float:right;
+      color: teal;
+      text-decoration-color: white;
     }
     
+    #movie-input {
+      font-weight: bolder;
+    }
+
+    label {
+      font-weight: bolder;
+    }
+   /* #movies-view {
+      /*float: right;
+    }
+        */
+
   </style>
 </head>
 
 <body>
-
+  <!-- Rendered Buttons will get Dumped Here  -->
+  <div id="buttons-view"></div>
+  
+  
   <div class="container">
-    <h1>GifTastic</h1>
-
-   
-
-    <!-- Rendered Buttons will get Dumped Here  -->
-    <div id="buttons-view"></div>
+    <!-- <h1>GifTastic</h1> -->
+    
 
     <form id="movie-form">
-      <label for="movie-input">Add a Gif Bro</label>
+      <label for="movie-input">Add an Animal</label><br>
       <input type="text" id="movie-input"><br>
 
       <!-- Button triggers new movie to be added -->
-      <input id="add-movie" type="submit" value="Add a Gif Bro">
+      <input id="add-movie" type="submit" value="Add an Animal">
     </form>
 
      <!-- Movies will Get Dumped Dere -->
      <div id="movies-view"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
     <script type="text/javascript">
       // Initial array of movies
-      var animals = ["Dog", "Cat", "Horse", "Cow"];
+      var animals = ["Dog", "Cat", "Rabbit", "Hampster", "Skunk", "Horse", "Cow"];
 
       // Function for dumping the JSON content for each button into the div
       function displayAnimalInfo() {
