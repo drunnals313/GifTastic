@@ -25,8 +25,8 @@
     input {
       margin: 10px;
       float:right;
-      color: teal;
-      text-decoration-color: white;
+      /*color: teal;
+      text-decoration-color: white;*/
     }
     
     #movie-input {
@@ -36,8 +36,8 @@
     label {
       font-weight: bolder;
     }
-   /* #movies-view {
-      /*float: right;
+     /*#movies-view {
+      float: left;
     }
         */
 
@@ -60,18 +60,21 @@
       <!-- Button triggers new movie to be added -->
       <input id="add-movie" type="submit" value="Add an Animal">
     </form>
-
+  </div>
      <!-- Movies will Get Dumped Dere -->
      <div id="movies-view"></div>
 
     
     <script type="text/javascript">
       // Initial array of movies
-      var animals = ["Dog", "Cat", "Rabbit", "Hampster", "Skunk", "Horse", "Cow"];
+      var animals = ["Dog", "Cat", "Rabbit", "Hampster", "Skunk", "Goldfish", "Bird", "Ferret", "Turtle", "Sugar Glider", "Chinchilla", "Hedgehog", "Hermit Crab", "Gerbil", "Cow", "Fainting Goat", "Chicken", "Capybara", "Teacup Pig", "Ball Python", "Guinea Pig", "Beta Fish", "Frog", "Salamanda", "Horse" ];
 
       // Function for dumping the JSON content for each button into the div
       function displayAnimalInfo() {
 
+        var animalImage = $("<img>");
+        animalImage.removeattr("src");
+        
         var animal = $(this).attr("data-name");
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         animal + "&api_key=dc6zaTOxFJmzC&limit=10";
@@ -91,7 +94,7 @@
           for (var i = 0; i < results.length; i++) {
 
             // Creating and storing a div tag
-            var animalDiv = $("<div>");
+            var animalDiv = $('<div class="col-sx-12 col-md-3 thumbnail">');
 
             // Creating a paragraph tag with the result item's rating
             var p = $("<p>").text("Rating: " + results[i].rating);
@@ -99,7 +102,14 @@
             // Creating and storing an image tag
             var animalImage = $("<img>");
             // Setting the src attribute of the image to a property pulled off the result item
+            //animalImage.attr("src", results[i].images.original_still.url);
+            animalImage.attr("width", "100%");
             animalImage.attr("src", results[i].images.fixed_height.url);
+            //animalImage.attr("src", results[i].images.fixed_height.url);
+            
+
+            animalImage.addClass("gif");
+
 
             // Appending the paragraph and image tag to the animalDiv
             animalDiv.append(p);
@@ -127,6 +137,7 @@
           var a = $("<button>");
           // Adding a class of movie to our button
           a.addClass("movie");
+          a.addClass("btn-info");
           // Adding a data-attribute
           a.attr("data-name", animals[i]);
           // Providing the initial button text
@@ -161,10 +172,11 @@
       // Calling the renderButtons function to display the initial buttons
       renderButtons();
 
-//DO NOT HAVE THIS WORKING TO PAUSE AND RESUME GIFS
-    $(".gif").on("click", function() {
+//DO NOT HAVE THIS WORKING TO PAUSE AND RESUME GIFS-- still need to add the right class attribute above and also still need to clear previous gifs each time
+    $(".movie").on("click", function() {
       // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
       var state = $(this).attr("data-state");
+      var animVar = $(this).attr("data-animate");
       // If the clicked image's state is still, update its src attribute to what its data-animate value is.
       // Then, set the image's data-state to animate
       // Else set src to the data-still value
@@ -180,7 +192,7 @@
 
       
     </script>
-  </div>
+  
 </body>
 
 </html>
