@@ -36,7 +36,9 @@
       /*float: left;*/
       display: inline-block;
     }
-        
+    h5 {
+      font-size:8px;
+     }   
 
   </style>
 </head>
@@ -56,15 +58,18 @@
 
       <!-- Button triggers new movie to be added -->
       <input id="add-movie" type="submit" value="Add an Animal">
+      <h5>Hint: click on images</h5>
     </form>
+      
   </div>
+    
      <!-- Movies will Get Dumped Dere -->
      <div id="movies-view"></div>
 
     
     <script type="text/javascript">
       // Initial array of movies
-      var animals = ["Dog", "Cat", "Rabbit", "Hampster", "Skunk", "Goldfish", "Bird", "Ferret", "Turtle", "Sugar Glider", "Chinchilla", "Hedgehog", "Hermit Crab", "Gerbil", "Cow", "Fainting Goat", "Chicken", "Capybara", "Teacup Pig", "Ball Python", "Guinea Pig", "Betta Fish", "Frog", "Salamander", "Horse" ];
+      var animals = ["Dog", "Cat", "Rabbit", "Honey Badger", "Panda", "Hampster", "Skunk", "Goldfish", "Bird", "Ferret", "Turtle", "Sugar Glider", "Chinchilla", "Hedgehog", "Hermit Crab", "Gerbil", "Cow", "Fainting Goat", "Chicken", "Capybara", "Teacup Pig", "Ball Python", "Guinea Pig", "Betta Fish", "Frog", "Salamander", "Horse" ];
 
       // Function for dumping the JSON content for each button into the div
       function displayAnimalInfo() {
@@ -104,14 +109,14 @@
             animalImage.attr("width", "100%");
             var defaultAnimatedSrc = results[i].images.fixed_height.url;
           	var staticSrc = results[i].images.fixed_height_still.url;
-            animalImage.attr("src", results[i].images.fixed_height_still.url);
+            animalImage.attr("src", results[i].images.fixed_height.url);
             //animalImage.attr("src", results[i].images.fixed_height.url);
             animalImage.attr("src", staticSrc);
-            
+            animalImage.addClass("gif");
             animalImage.attr("data-state", "still");
             animalImage.attr("data-still", staticSrc);
             animalImage.attr("data-animate", defaultAnimatedSrc);
-            animalImage.addClass("gif");
+           
             
             // Appending the paragraph and image tag to the animalDiv
             animalDiv.append(p);
@@ -192,19 +197,16 @@
         //$(this).attr("data-state", "still");
       //}
       function pausePlay() {
-      var state = $(this).attr("data-state");
-      if (state === "still") {
-        $(this).attr("src", $(this).attr("data-animate"));
-        $(this).attr("data-state", "animate");
-      } else {
-        $(this).attr("src", $(this).attr("data-still"));
-        $(this).attr("data-state", "still");
-  }
-}
-    //};
-
-
-      
+        var state = $(this).attr("data-state");
+        if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+            } else {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+                }
+      }
+         
     </script>
   
 </body>
