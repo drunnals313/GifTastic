@@ -10,15 +10,10 @@
   <!-- Added link to the bootstrap library-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
         crossorigin="anonymous">
-
     
-
-
-    <!-- Added link to the jQuery Library -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Added link to the ajax library to play around in this code as we learn in class-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <style type="text/css">
+  <!-- Added link to the ajax library to play around in this code as we learn in class-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <style type="text/css">
     button,
     div,
     form,
@@ -36,10 +31,12 @@
     label {
       font-weight: bolder;
     }
-     /*#movies-view {
-      float: left;
+
+    #movies-view {
+      /*float: left;*/
+      display: inline-block;
     }
-        */
+        
 
   </style>
 </head>
@@ -67,13 +64,14 @@
     
     <script type="text/javascript">
       // Initial array of movies
-      var animals = ["Dog", "Cat", "Rabbit", "Hampster", "Skunk", "Goldfish", "Bird", "Ferret", "Turtle", "Sugar Glider", "Chinchilla", "Hedgehog", "Hermit Crab", "Gerbil", "Cow", "Fainting Goat", "Chicken", "Capybara", "Teacup Pig", "Ball Python", "Guinea Pig", "Beta Fish", "Frog", "Salamanda", "Horse" ];
+      var animals = ["Dog", "Cat", "Rabbit", "Hampster", "Skunk", "Goldfish", "Bird", "Ferret", "Turtle", "Sugar Glider", "Chinchilla", "Hedgehog", "Hermit Crab", "Gerbil", "Cow", "Fainting Goat", "Chicken", "Capybara", "Teacup Pig", "Ball Python", "Guinea Pig", "Betta Fish", "Frog", "Salamander", "Horse" ];
 
       // Function for dumping the JSON content for each button into the div
       function displayAnimalInfo() {
 
         var animalImage = $("<img>");
-        animalImage.removeattr("src");
+     // clear the movies when a different button is click so only the new animals are displayed.
+        $("#movies-view").empty();
         
         var animal = $(this).attr("data-name");
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -94,7 +92,7 @@
           for (var i = 0; i < results.length; i++) {
 
             // Creating and storing a div tag
-            var animalDiv = $('<div class="col-sx-12 col-md-3 thumbnail">');
+            var animalDiv = $('<div class="col-sx-12 col-md-2 thumbnail">');
 
             // Creating a paragraph tag with the result item's rating
             var p = $("<p>").text("Rating: " + results[i].rating);
@@ -104,13 +102,17 @@
             // Setting the src attribute of the image to a property pulled off the result item
             //animalImage.attr("src", results[i].images.original_still.url);
             animalImage.attr("width", "100%");
-            animalImage.attr("src", results[i].images.fixed_height.url);
+            var defaultAnimatedSrc = results[i].images.fixed_height.url;
+          	var staticSrc = results[i].images.fixed_height_still.url;
+            animalImage.attr("src", results[i].images.fixed_height_still.url);
             //animalImage.attr("src", results[i].images.fixed_height.url);
+            animalImage.attr("src", staticSrc);
             
-
+            animalImage.attr("data-state", "still");
+            animalImage.attr("data-still", staticSrc);
+            animalImage.attr("data-animate", defaultAnimatedSrc);
             animalImage.addClass("gif");
-
-
+            
             // Appending the paragraph and image tag to the animalDiv
             animalDiv.append(p);
             animalDiv.append(animalImage);
@@ -171,23 +173,35 @@
 
       // Calling the renderButtons function to display the initial buttons
       renderButtons();
-
+      $(document).on("click", ".gif", pausePlay);
 //DO NOT HAVE THIS WORKING TO PAUSE AND RESUME GIFS-- still need to add the right class attribute above and also still need to clear previous gifs each time
-    $(".movie").on("click", function() {
-      // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-      var state = $(this).attr("data-state");
-      var animVar = $(this).attr("data-animate");
-      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+  //.movie instead of body? //".gif"
+    //$(".gif").on("click",  function() {
+      //function pausePlay() {
+       //The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+      //var state = $(this).attr("data-state");
+      //var animVar = $(this).attr("data-animate");
+       //If the clicked image's state is still, update its src attribute to what its data-animate value is.
       // Then, set the image's data-state to animate
       // Else set src to the data-still value
+      //if (state === "still") {
+        //$(this).attr("src", $(this).attr("data-animate"));
+        //$(this).attr("data-state", "animate");
+      //} else {
+        //$(this).attr("src", $(this).attr("data-still"));
+        //$(this).attr("data-state", "still");
+      //}
+      function pausePlay() {
+      var state = $(this).attr("data-state");
       if (state === "still") {
         $(this).attr("src", $(this).attr("data-animate"));
         $(this).attr("data-state", "animate");
       } else {
         $(this).attr("src", $(this).attr("data-still"));
         $(this).attr("data-state", "still");
-      }
-    });
+  }
+}
+    //};
 
 
       
